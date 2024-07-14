@@ -1,0 +1,31 @@
+name: Build & Deploy Spring app
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy: # name of job
+    name: Build and Deploy App Spring Store
+    runs-on: # the runner is the machine where it runs the code
+    - ubuntu-latest
+
+    steps:
+      - name: Checkout the code #Checkout Code | pull the code to ubuntu machine
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17 # Install JDK 17 on ubuntu machine
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '17'
+      
+      - name: Unit Tests # Running tests
+        run: mvn -B test --file pom.xml
+
+      - name: Build The Application # Build Jar file
+        run: |
+          mvn clean
+          mvn -B package --file pom.xml
+
