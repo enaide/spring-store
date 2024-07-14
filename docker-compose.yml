@@ -1,0 +1,34 @@
+services:
+  postgres:
+    container_name: postgres-lab
+    image: postgres:16.3-alpine3.19
+    environment:
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - "5432:5432"
+    volumes:
+    # - ~/Desktop/db-data:/var/lib/postgresql/data
+      - db-lab-data:/var/lib/postgresql/data
+    networks:
+      - db-lab-network
+  spring-store:
+    container_name: spring-store-api
+    image: app-store/app-store:1.0.2
+    ports:
+      - "8082:8082"
+    networks:
+      - db-lab-network
+    depends_on:
+      - postgres
+  
+networks:
+  db-lab-network:
+    driver: bridge
+
+volumes:
+  db-lab-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ~/Documents/Database/Postgres/db-data/
