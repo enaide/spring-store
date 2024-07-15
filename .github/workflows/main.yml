@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout the code #Checkout Code | pull the code to ubuntu machine
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Only checkout the current branch
 
       - name: Set up JDK 17 # Install JDK 17 on ubuntu machine
         uses: actions/setup-java@v4
@@ -22,10 +24,12 @@ jobs:
           java-version: '17'
       
       - name: Unit Tests # Running tests
-        run: mvn -B test --file pom.xml
+        run: ./mvnw clean test
+        #run: mvn -B test --file pom.xml
 
       - name: Build The Application # Build Jar file
-        run: |
-          mvn clean
-          mvn -B package --file pom.xml
+        run: ./mvnw clean package
+        #run: |
+          #  mvn clean
+          #  mvn -B package --file pom.xml
 
