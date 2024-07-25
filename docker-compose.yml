@@ -1,6 +1,6 @@
 services:
-  postgres:
-    container_name: postgres-lab
+  psql_prod:
+    container_name: psql_prod_lab
     image: postgres:16.3-alpine3.19
     environment:
       - POSTGRES_PASSWORD=admin
@@ -8,27 +8,35 @@ services:
       - "5432:5432"
     volumes:
     # - ~/Desktop/db-data:/var/lib/postgresql/data
-      - lab-data:/var/lib/postgresql/data
+      - prod_data:/var/lib/postgresql/data
     networks:
-      - lab-network
+      - prod_network    
+
   spring-store:
     container_name: spring-store-api
-    image: spring-store/spring-store:0.0.4
+    image: ecfcode/spring-store:0.0.5
     ports:
       - "8080:8080"
     networks:
-      - lab-network
+      - prod_network
     depends_on:
-      - postgres
+      - psql_prod
   
 networks:
-  lab-network:
+  prod_network:
     driver: bridge
 
 volumes:
-  lab-data:
+  dev_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ~/Documents/Database/Postgres/db-data/
+      device: ~/Documents/Database/Postgres/dev_data
+
+  prod_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ~/Documents/Database/Postgres/prod_data/  

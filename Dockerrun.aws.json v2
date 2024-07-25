@@ -1,0 +1,23 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "store-api",
+      "image": "ecfcode/spring-store:0.0.5",
+      "essential": true,
+      "memory": 512,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 8080
+        }
+      ],
+      "environments":[
+        {
+          "name": "DB_URL",
+          "value": "jdbc:postgresql://TODO:5432/ecommerce"
+        }
+      ]
+    }
+  ]
+}

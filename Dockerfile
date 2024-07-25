@@ -6,17 +6,18 @@ RUN mvn dependency:go-offline
 COPY src ./src
 RUN mvn clean package -DskipTests
 
+
 # Runtime stage
 FROM amazoncorretto:17
 ARG PROFILE=dev
-ARG APP_VERSION=0.0.3
+ARG APP_VERSION=0.0.5
 
-# define few things
 
 WORKDIR /app
 COPY --from=build /build/target/spring-store-*.jar /app/
 
-ENV DB_URL=jdbc:postgresql://postgres-lab:5432/ecommerce
+
+ENV DB_URL=jdbc:postgresql://psql_prod:5432/ecommerce
 ENV ACTIVE_PROFILE=${PROFILE}
 ENV JAR_VERSION=${APP_VERSION}
 
