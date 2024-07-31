@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "store-api",
-      "image": "ecfcode/spring-store:0.0.5",
+      "image": "ecfcode/spring-store:latest",
       "essential": true,
       "memory": 512,
       "portMappings": [
@@ -14,8 +14,8 @@
       ],
       "environments":[
         {
-          "name": "DB_URL",
-          "value": "jdbc:postgresql://TODO:5432/ecommerce"
+          "name": "SPRING_DATASOURCE_URL",
+          "value": "jdbc:postgresql://awseb-e-rpafzf2st6-stack-awsebrdsdatabase-5kccga9w8v9h.cteywcikgt18.eu-west-2.rds.amazonaws.com:5432/ecommerce"
         }
       ]
     }
